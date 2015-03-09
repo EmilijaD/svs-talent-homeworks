@@ -1,5 +1,5 @@
 package kamion;
-
+//test
 public class Topka implements ImaMasa {
 	private double radius;
 	private double gustina;

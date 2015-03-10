@@ -15,7 +15,7 @@ public abstract class PaketPijalok implements ImaMasa {
 	@Override
 	public double vratiMasa() {
 		double masa = volumenEden * GUSTINA *AMBALAZA;
-		return 0;
+		return masa;
 	}
 
 	@Override
@@ -26,6 +26,14 @@ public abstract class PaketPijalok implements ImaMasa {
 			return 1;
 		return -1;
 	}
+	public double getVolumenEden() {
+		return volumenEden;
+	}
+
+	public void setVolumenEden(double volumenEden) {
+		this.volumenEden = volumenEden;
+	}
+
 	public int getKolicina() {
 		return this.kolicina;
 	}

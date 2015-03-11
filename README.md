@@ -1,59 +1,58 @@
-# svs-talent-homeworks
-All the homework project from Seavus
-import java.util.Scanner;
 
-public class Numbers {
+public class Numbers1 {
 
-	public static void numWord(String[] broj) {
-		for (int i = 0; i < broj.length; i++) {
+	public static int numWord(String broj) {
+		
 
-			switch (broj[i]) {
+			switch (broj) {
 			case "zero":
-				System.out.println("0");
-				break;
+		          return 0;
 			case "one":
-				System.out.println("1");
-				break;
+			     return 1;
 			case "two":
-				System.out.println("2");
-				break;
+			     return 2;
 			case "three":
-				System.out.println("3");
-				break;
+			     return 3;
 			case "four":
-				System.out.println("4");
-				break;
+			     return 4;
+			
 			case "five":
-				System.out.println("5");
-				break;
+			     return 5;
+			
 			case "six":
-				System.out.println("6");
-				break;
+			     return 6;
+				
 			case "seven":
-				System.out.println("7");
-				break;
+			     return 7;
+			
 			case "eight":
-				System.out.println("8");
-				break;
+			     return 8;
+			
 			case "nine":
-				System.out.println("9");
-				break;
+			     return 9;
+		
 			case "ten":
-				System.out.println("10");
-				break;
+			     return 10;
+			
 			default:
 				System.out.println("Nema vneseno broj");
 			}
+		
+			return 0;
+			
 		}
-	}
+	
 
 	public static void main(String[] args) {
 		// Scanner scanner = new Scanner(System.in);
 		// System.out.println("Enter a number from 0 to 10");
 		//
 		// String broj = scanner.nextLine();
-		String[] niza = { "one", "five", "zero" };
-		numWord(niza);
+		String[] niza = { "one","five","zero" };
+		for (int j = 0; j < niza.length; j++) {
+			System.out.println(numWord(niza[j]));
+		}
+		
 
 	}
 

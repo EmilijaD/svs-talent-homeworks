@@ -1,4 +1,30 @@
 
+public class ZipCode {
+
+	private long value;
+	
+	
+	
+	
+	public ZipCode(long value) {
+		super();
+		if ((value <= 99999 && value > 9999) || ( value <= 99999999 && value >9999999 ))
+		{this.value = value;}
+		else{
+			System.out.println("greska");
+		}
+	}
+
+
+
+
+	public static void main(String[] args) {
+		ZipCode zipKod = new ZipCode(76599);
+
+	}
+
+}
+
 public class Numbers1 {
 
 	public static int numWord(String broj) {

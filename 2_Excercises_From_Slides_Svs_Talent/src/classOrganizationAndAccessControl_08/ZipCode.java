@@ -1,4 +1,3 @@
-package classOrganizationAndAccessControl_08;
 
 public class ZipCode {
 
@@ -6,22 +5,25 @@ public class ZipCode {
 	public boolean check (long zip)
 	{
 		if (String.valueOf(zip).length()==5 || String.valueOf(zip).length()==9)
-			return true;
+			{return true;}
+		else{
 		return false;
+		}
 	}
 	
-	public ZipCode(long zipCode) {
+	public ZipCode(long zipCode) throws ZipCodeException{
+		
 		if  (check(zipCode))
 		{
 		this.zipCode=zipCode;
 		}else{
-			System.out.println("Error!");
+			
+			throw new ZipCodeException("");
 		}
 	}
      
 
-	public static void main(String[] args) {
-	ZipCode kod = new ZipCode(987688887);
-	}
+	public static void main(String[] args) throws ZipCodeException {
+	ZipCode kod = new ZipCode(0);
 
-}
+}}

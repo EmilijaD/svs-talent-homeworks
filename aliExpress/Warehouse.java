@@ -7,6 +7,7 @@ public class Warehouse {
 
 	ArrayList<Produkti> produkti;
 	ArrayList<ShoppingBasket> kosnicka = new ArrayList<ShoppingBasket>();
+	HashMap<String, Integer> mapa = new HashMap<String, Integer>();
 	ShoppingBasket busket;
 	public Warehouse(ArrayList<Produkti> produkti) {
 		super();

@@ -1,14 +1,12 @@
-package aliExpress;
-
-public class Produkti {
-
+package basketAndProduct;
+public class Produkt {
 	String key;
 	String name;
 	int price;
 	int quantity;
 
-	public Produkti(String key, String name, int price, int quantity) {
-		super();
+	public Produkt(String key, String name, int price, int quantity) {
+		
 		this.key = key;
 		this.name = name;
 		this.price = price;

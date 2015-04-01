@@ -1,17 +1,22 @@
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+@Entity
+@Table(name = "product")
 public class Produkt {
-	String key;
-	String name;
-	int price;
-	int quantity;
-
-	public Produkt(String key, String name, int price, int quantity) {
-		
-		this.key = key;
-		this.name = name;
-		this.price = price;
-		this.quantity = quantity;
-	}
+	@Id
+	@GeneratedValue
+	private Long id;
+	@Column(name = "key")
+	private String key;
+	@Column(name = "name")
+	private String name;
+	@Column(name = "price")
+	private int price;
+	@Column(name = "quantity")
+	private int quantity;
 
 	public String getKey() {
 		return key;
@@ -47,8 +52,7 @@ public class Produkt {
 
 	@Override
 	public String toString() {
-		return " key=" + key + ", name=" + name + ", price=" + price
-				+ ", quantity=" + quantity;
+		return "Price: " + price + "\n" + " Name: " + name + "\t";
 	}
 
 }

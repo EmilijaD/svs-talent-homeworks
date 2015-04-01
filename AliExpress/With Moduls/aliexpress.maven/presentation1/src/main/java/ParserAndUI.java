@@ -31,8 +31,13 @@ public class ParserAndUI {
 					cena = niza[2];
 					kolicina = niza[3];
 				}
-				prod.add(new Produkt(kluc, ime, Integer.parseInt(cena), Integer
-						.parseInt(kolicina)));
+				Produkt produkt = new Produkt();
+				produkt.setKey(kluc);
+				produkt.setName(ime);
+				produkt.setPrice(Integer.parseInt(cena));
+				produkt.setQuantity(Integer.parseInt(kolicina));
+
+				prod.add(produkt);
 
 			}
 
@@ -53,7 +58,12 @@ public class ParserAndUI {
 			int option = scanner.nextInt();
 			switch (option) {
 			case 1:
-				magacin.listProducts();
+				ArrayList<Produkt> lista = magacin.listProducts();
+				for (int i = 0; i < lista.size(); i++) {
+					System.out.println(lista.get(i).getName() + " "
+							+ lista.get(i).getPrice() + " $");
+
+				}
 				break;
 			case 2:
 				System.out.println("kolku produkti ke kupite");

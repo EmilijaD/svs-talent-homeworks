@@ -1,13 +1,10 @@
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-
 
 public interface Warehouse {
 
-	public void addProduct(ArrayList<Produkt> produkt) throws SQLException;
+	public void addProduct(ArrayList<Produkt> produkt);
 
-	public void listProducts() throws SQLException;
-	
-	
+	public ArrayList<Produkt> listProducts();
+
 }

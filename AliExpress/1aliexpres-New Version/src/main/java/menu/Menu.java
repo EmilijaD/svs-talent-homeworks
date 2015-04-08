@@ -41,14 +41,14 @@ public class Menu implements ManuCreator {
 	}
 
 	public void AddProductIntoBasket() throws NemaDovolnoKolicinaIsklucok {
-		System.out.println("kolku produkti ke kupite");
+		Printer.print("kolku produkti ke kupite");
 		int broj = consoleInput.input().nextInt();
 		if (broj != 0) {
 			for (int i = 0; i < broj; i++) {
-				System.out.println("Vnesi produkt");
+				Printer.print("Vnesi produkt");
 				String produkt = consoleInput.input().next();
 				if (!produkt.isEmpty()) {
-					System.out.println("Vnesi kolicina");
+					Printer.print("Vnesi kolicina");
 					int kolicina = consoleInput.input().nextInt();
 					for (int j = 0; j < lista.size(); j++) {
 
@@ -92,11 +92,11 @@ public class Menu implements ManuCreator {
 				display.run();
 				break;
 			case 5:
-				System.out.println("kraj cao");
+				Printer.print("kraj cao");
 				stop = true;
 				break;
 			default:
-				System.out.println("Nevalidna opcija!");
+				Printer.print("Nevalidna opcija!");
 			}
 		}
 	}

@@ -1,5 +1,7 @@
 package menu;
 
+import java.util.ArrayList;
+
 import basket.ShopingBasketMethods;
 import basket.ShoppingBasketOptions;
 import printer.ConsoleInput;
@@ -20,8 +22,10 @@ public class Display {
 		Warehouse warehouse = FactoryWarehouse
 				.warehouseFactory(choiseTechnique);
 		ShopingBasketMethods basket = new ShoppingBasketOptions();
-		Menu manu = new Menu(basket, warehouse);
-		manu.start();
+		UI ui = new UI(basket, warehouse);
+		ArrayList<String> actions = ui.actions();
+		Menu menu = new Menu(actions, ui);
+		menu.start();
 	}
 
 }

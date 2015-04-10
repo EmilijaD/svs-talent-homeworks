@@ -6,7 +6,7 @@ import parser.Produkt;
 
 public interface Warehouse {
 
-	public void addProduct(ArrayList<Produkt> produkt);
+	public void addProduct(Produkt produkt);
 
 	public ArrayList<Produkt> listProducts();
 

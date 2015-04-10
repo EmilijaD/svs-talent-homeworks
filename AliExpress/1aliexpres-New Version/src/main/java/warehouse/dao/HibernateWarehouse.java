@@ -1,58 +1,41 @@
 package warehouse.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 import parser.Produkt;
-import databaseConnections.HibernateConnection;
+import template.HibernateDatabaseReader;
+import template.HibernateDatabaseWriter;
+import template.HibernateTemplate;
 
-public class HibernateWarehouse implements Warehouse{
+public class HibernateWarehouse implements Warehouse {
 
-	public void addProduct(ArrayList<Produkt> produkt) {
-		Session session = HibernateConnection.connection();
-		Transaction tx = null;
-		try {
-			tx = session.beginTransaction();
-			for (int i = 0; i < produkt.size(); i++) {
-				session.save(produkt.get(i));
+	public void addProduct(final Produkt produkt) {
+
+		new HibernateTemplate().saveOrUpdateQuery(
+
+		new HibernateDatabaseWriter() {
+
+			public Object insertQuery() {
+				return produkt;
 			}
-
-			tx.commit();
-
-		} catch (RuntimeException e) {
-			if (tx != null) {
-				tx.rollback();
-			}
-			throw e;
-
-		} finally {
-			HibernateConnection.closeSession();
-		}
+		});
 
 	}
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<Produkt> listProducts() {
-		Session session = HibernateConnection.connection();
-		Transaction tx = null;
-		ArrayList<Produkt> results = null;
-		try {
-			tx = session.beginTransaction();
-			Criteria cr = session.createCriteria(Produkt.class);
-			results = (ArrayList<Produkt>) cr.list();
-			tx.commit();
-		} catch (RuntimeException e) {
-			if (tx != null) {
-				tx.rollback();
-			}
 
-		} finally {
-			HibernateConnection.closeSession();
-		}
-		return results;
+		return new HibernateTemplate().returnQuery(new HibernateDatabaseReader() {
+
+			public List<Produkt> returnQuery(Session session) {
+				List<Produkt> results = session.createQuery("FROM Produkt")
+						.list();
+				return results;
+			}
+		});
+
 	}
 
 }

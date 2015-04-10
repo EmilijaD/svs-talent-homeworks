@@ -1,4 +1,5 @@
 package warehouse.dao;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,8 +12,8 @@ public class InMemoryWarehouse implements Warehouse {
 	ProductsParser parser = new ProductsParser();
 	ArrayList<Produkt> produkti = parser.parseFile();
 
-	public void addProduct(ArrayList<Produkt> produkt) {
-		this.produkti = produkt;
+	public void addProduct(Produkt produkt) {
+		produkti.add(produkt);
 
 	}
 

@@ -6,75 +6,60 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
+import javassist.bytecode.stackmap.BasicBlock.Catch;
 import parser.Produkt;
+import template.JDBCTemplate;
+import template.JdbcDatabaseReader;
+import template.JdbcDatabaseWriter;
 import databaseConnections.JDBConnection;
 
 public class JdbcDatabaseWarehouse implements Warehouse {
-	public void addProduct(ArrayList<Produkt> produkt) {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		try {
-			connection = JDBConnection.connection();
-			preparedStatement = connection
-					.prepareStatement("insert into product (key, name,price,quantity) values (?, ?, ?, ?)");
+	public void addProduct(final Produkt produkt) {
+		new JDBCTemplate().insertQuery(new JdbcDatabaseWriter() {
 
-			for (int i = 0; i < produkt.size(); i++) {
+			public void insertQuery(Connection connection) throws SQLException {
+				PreparedStatement preparedStatement = null;
+				preparedStatement = connection
+						.prepareStatement("insert into product (key, name,price,quantity) values (?, ?, ?, ?)");
 
-				preparedStatement.setString(1, produkt.get(i).getKey());
-				preparedStatement.setString(2, produkt.get(i).getName());
-				preparedStatement.setInt(3, produkt.get(i).getPrice());
-				preparedStatement.setInt(4, produkt.get(i).getQuantity());
+				preparedStatement.setString(1, produkt.getKey());
+				preparedStatement.setString(2, produkt.getName());
+				preparedStatement.setInt(3, produkt.getPrice());
+				preparedStatement.setInt(4, produkt.getQuantity());
 				preparedStatement.addBatch();
+				preparedStatement.execute();
+
 			}
-
-		} catch (Exception e) {
-
-		} finally {
-
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		});
 
 	}
 
 	public ArrayList<Produkt> listProducts() {
 
-		Statement statement = null;
-		ArrayList<Produkt> products = new ArrayList<Produkt>();
-		try {
-			Connection connection = JDBConnection.connection();
-			statement = connection.createStatement();
-			ResultSet resultSet = statement
-					.executeQuery("select * from product");
-			while (resultSet.next()) {
-				String key = resultSet.getString("key");
-				String name = resultSet.getString("name");
-				int price = resultSet.getInt("price");
-				int quantity = resultSet.getInt("quantity");
-				Produkt produkt = new Produkt();
-				produkt.setKey(key);
-				produkt.setName(name);
-				produkt.setPrice(price);
-				produkt.setQuantity(quantity);
-				products.add(produkt);
+		return new JDBCTemplate().returnQuery(new JdbcDatabaseReader() {
 
+			@SuppressWarnings("unchecked")
+			public List<Produkt> returnQuery(Connection connection)
+					throws SQLException {
+				ArrayList<Produkt> products = new ArrayList<Produkt>();
+				PreparedStatement preparedStatement = connection
+						.prepareStatement("SELECT * FROM product");
+				ResultSet resultSet = preparedStatement.executeQuery();
+				while (resultSet.next()) {
+					Produkt prod = new Produkt();
+					prod.setKey(resultSet.getString("key"));
+					prod.setName(resultSet.getString("name"));
+					prod.setPrice(resultSet.getInt("price"));
+					prod.setQuantity(resultSet.getInt("quantity"));
+					products.add(prod);
+				}
+				preparedStatement.close();
+				return products;
 			}
-		} catch (Exception e) {
-
-		} finally {
-			try {
-				statement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return products;
+		});
 
 	}
+
 }

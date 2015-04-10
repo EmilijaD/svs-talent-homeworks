@@ -1,22 +1,49 @@
 package template;
 
-import java.util.ArrayList;
-
-import parser.Produkt;
-import warehouse.dao.HibernateWarehouse;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import databaseConnections.HibernateConnection;
 
 public class HibernateTemplate {
 
-	public void addProduct(ArrayList<Produkt> produkt) {
-		HibernateWarehouse ht = new HibernateWarehouse();
-		ht.addProduct(produkt);
+	public <E> E returnQuery(HibernateDatabaseReader databaseReader) {
+		Session session = HibernateConnection.connection();
+		Transaction tx = null;
+		E object;
+		try {
+			tx = session.beginTransaction();
+			object = databaseReader.returnQuery(session);
+			tx.commit();
+		} catch (RuntimeException e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			throw e;
+		} finally {
+			HibernateConnection.closeSession();
+		}
+
+		return object;
 	}
 
-	public ArrayList<Produkt> listProducts() {
-		HibernateWarehouse ht = new HibernateWarehouse();
-		ArrayList<Produkt> results = ht.listProducts();
+	public void saveOrUpdateQuery(HibernateDatabaseWriter databaseWriter) {
+		Session session = HibernateConnection.connection();
+		Transaction tx = null;
 
-		return (ArrayList<Produkt>) results;
+		try {
+			tx = session.beginTransaction();
+			Object object = databaseWriter.insertQuery();
+			session.saveOrUpdate(object);
+			tx.commit();
+		} catch (RuntimeException e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			throw e;
+		} finally {
+			HibernateConnection.closeSession();
+		}
 
 	}
+
 }

@@ -1,21 +1,39 @@
 package template;
 
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.SQLException;
 
-import parser.Produkt;
-import warehouse.dao.JdbcDatabaseWarehouse;
+import databaseConnections.JDBConnection;
 
 public class JDBCTemplate {
 
-	public void addProduct(ArrayList<Produkt> produkt) {
-		JdbcDatabaseWarehouse jt = new JdbcDatabaseWarehouse();
-		jt.addProduct(produkt);
-	}
+	public <E> E returnQuery(JdbcDatabaseReader jdbcReader) {
+		E object = null;
+		try{
+		Connection connection = JDBConnection.connection();
+		object = jdbcReader.returnQuery(connection);
+		JDBConnection.closeConnection();
+	
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return object;
 
-	public ArrayList<Produkt> listProducts() {
-		JdbcDatabaseWarehouse jt = new JdbcDatabaseWarehouse();
-		ArrayList<Produkt> results = jt.listProducts();
-		return results;
 	}
-
+	
+	public void insertQuery (JdbcDatabaseWriter jdbcWriter)
+	{
+		try{
+			Connection connection = JDBConnection.connection();
+			jdbcWriter.insertQuery(connection);
+			JDBConnection.closeConnection();
+		
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		
+	}
 }

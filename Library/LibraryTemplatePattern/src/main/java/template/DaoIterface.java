@@ -1,31 +1,23 @@
 package template;
 
-import java.util.Date;
 import java.util.List;
-
-import org.hibernate.Session;
-
-import dao.Member;
-import dao.Publications;
+import dao.Book;
+import dao.Magazine;
 
 public interface DaoIterface {
 
-	public void register(Object object, Session session);
+	public void registerBook(final Book book);
 
-	public List<Publications> listregisteredPublications(Session session,
-			Publications publication);
+	public List<Book> listregisteredBooks();
 
-	public void updateBook(String oldisbn, String newIsbn, String newTitle,
-			Session session);
+	public void unregisterBook(final String isbn);
 
-	public void updateMagazine(String oldIssn, String newIssn, String newTitle,
-			Session session);
+	public void updateBook(String oldisbn, String newIsbn, String newTitle);
 
-	public void unregisterBook(String isbn, Session session);
+	public void updateMagazine(String oldIssn, String newIssn, String newTitle);
 
-	public void unregisterMagazine(String issn, Session session);
+	public void registerMagazine(final Magazine magazine);
 
-	public void lendPublication(Member member, Publications publication,
-			Date enddate, Date startdate, Session session);
+	public void unregisterMagazine(String issn);
 
 }

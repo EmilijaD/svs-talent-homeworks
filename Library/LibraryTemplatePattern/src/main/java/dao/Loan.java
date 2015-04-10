@@ -1,8 +1,6 @@
 package dao;
 
 import java.util.Date;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,10 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import template.Helper;
-
 @Entity
-public class Loan implements Helper {
+public class Loan {
 	@Override
 	public String toString() {
 		return "Loan [member=" + this.getMember() + ", publications="

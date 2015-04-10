@@ -11,10 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import template.Helper;
-
 @Entity
-public class Member implements Helper {
+public class Member {
 	@OneToOne(mappedBy = "member")
 	private Membership membership;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "member", cascade = CascadeType.ALL)

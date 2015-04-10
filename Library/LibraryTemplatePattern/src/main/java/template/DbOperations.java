@@ -1,184 +1,111 @@
 package template;
 
-import java.util.Date;
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import dao.Book;
-import dao.Loan;
 import dao.Magazine;
-import dao.Member;
 import dao.Publications;
 
 public class DbOperations implements DaoIterface {
 
-	public void register(Object object, Session session) {
-		Transaction tx = null;
-		try {
-			tx = session.beginTransaction();
-			session.saveOrUpdate(object);
-			tx.commit();
+	public void registerBook(final Book book) {
+		new Template().saveOrUpdateQuery(new DatabaseWriter() {
 
-		} catch (RuntimeException e) {
-			if (tx != null) {
-				tx.rollback();
+			public Object insertQuery() {
+
+				return book;
 			}
-			throw e;
-		} finally {
-			session.close();
-		}
+		});
 
 	}
 
-	public void unregisterBook(String isbn, Session session) {
-		Transaction tx = null;
-		String hql = "DELETE FROM Book WHERE isbn = :book_isbn";
-		Query query = session.createQuery(hql);
-		query.setParameter("book_isbn", isbn);
-		query.executeUpdate();
+	public void unregisterBook(final String isbn) {
 
-		try {
-			tx = session.beginTransaction();
+		new Template().returnQuery(new DatabaseReader() {
 
-			tx.commit();
-		} catch (RuntimeException e) {
-			if (tx != null) {
-				tx.rollback();
+			public <E> E returnQuery(Session session) {
+				String hql = "DELETE FROM Book WHERE isbn = :book_isbn";
+				final Query query = session.createQuery(hql);
+				query.setParameter("book_isbn", isbn);
+				query.executeUpdate();
+				return null;
 			}
-
-		} finally {
-			session.close();
-		}
+		});
 
 	}
 
-	public List<Publications> listregisteredPublications(Session session,
-			Publications publication) {
-		Transaction tx = null;
-		List results = null;
-		Criteria cr = null;
-		try {
-			tx = session.beginTransaction();
-			if (publication instanceof Book) {
-				cr = session.createCriteria(Book.class);
-			}
-			if (publication instanceof Magazine) {
-				cr = session.createCriteria(Book.class);
-			}
-			results = cr.list();
-			tx.commit();
-		} catch (RuntimeException e) {
-			if (tx != null) {
-				tx.rollback();
+	public List<Book> listregisteredBooks() {
+		return new Template().returnQuery(new DatabaseReader() {
+
+			@SuppressWarnings("unchecked")
+			public List<Publications> returnQuery(Session session) {
+				List<Publications> results = session.createQuery("FROM Book")
+						.list();
+				return results;
 			}
 
-		} finally {
-			session.close();
-		}
-		return results;
+		});
+	}
+
+	public void updateBook(final String oldisbn, final String newIsbn,
+			final String newTitle) {
+		new Template().returnQuery(new DatabaseReader() {
+
+			public <E> E returnQuery(Session session) {
+				String hql = "UPDATE Book set title = :title, isbn = :isbn WHERE isbn = :book_isbn";
+				Query query = session.createQuery(hql);
+				query.setParameter("title", newTitle);
+				query.setParameter("book_isbn", oldisbn);
+				query.setParameter("isbn", newIsbn);
+				query.executeUpdate();
+				return null;
+			}
+		});
 
 	}
 
-	public void updateBook(String oldisbn, String newIsbn, String newTitle,
-			Session session) {
-		Transaction tx = null;
-		try {
-			tx = session.beginTransaction();
+	public void updateMagazine(final String oldIssn, final String newIssn,
+			final String newTitle) {
+		new Template().returnQuery(new DatabaseReader() {
 
-			String hql = "UPDATE Book set title = :title, isbn = :isbn WHERE isbn = :book_isbn";
-			Query query = session.createQuery(hql);
-			query.setParameter("title", newTitle);
-			query.setParameter("book_isbn", oldisbn);
-			query.setParameter("isbn", newIsbn);
-			query.executeUpdate();
-
-			tx.commit();
-
-		} catch (RuntimeException e) {
-			if (tx != null) {
-				tx.rollback();
+			public <E> E returnQuery(Session session) {
+				String hql = "UPDATE Magazine set title = :title, issn = :issn WHERE issn = :magazine_issn";
+				Query query = session.createQuery(hql);
+				query.setParameter("title", newTitle);
+				query.setParameter("magazine_issn", oldIssn);
+				query.setParameter("issn", newIssn);
+				query.executeUpdate();
+				return null;
 			}
-
-		} finally {
-			session.close();
-		}
+		});
 
 	}
 
-	public void updateMagazine(String oldIssn, String newIssn, String newTitle,
-			Session session) {
-		Transaction tx = null;
-		try {
-			tx = session.beginTransaction();
+	public void unregisterMagazine(final String issn) {
+		new Template().returnQuery(new DatabaseReader() {
 
-			String hql = "UPDATE Magazine set title = :title, issn = :issn WHERE issn = :magazine_issn";
-			Query query = session.createQuery(hql);
-			query.setParameter("title", newTitle);
-			query.setParameter("magazine_issn", oldIssn);
-			query.setParameter("issn", newIssn);
-			query.executeUpdate();
-
-			tx.commit();
-
-		} catch (RuntimeException e) {
-			if (tx != null) {
-				tx.rollback();
+			public <E> E returnQuery(Session session) {
+				String hql = "DELETE FROM Magazine WHERE issn = :magazine_issn";
+				Query query = session.createQuery(hql);
+				query.setParameter("magazine_issn", issn);
+				query.executeUpdate();
+				return null;
 			}
-
-		} finally {
-			session.close();
-		}
+		});
 
 	}
 
-	public void lendPublication(Member member, Publications publication,
-			Date enddate, Date startdate, Session session) {
-		Transaction tx = null;
-		Loan loan = new Loan();
-		loan.setEnddate(enddate);
-		loan.setStartdate(startdate);
-		loan.setMember(member);
-		loan.setPublication(publication);
-		try {
-			tx = session.beginTransaction();
-			session.save(publication);
-			session.save(member);
-			session.save(loan);
-			tx.commit();
-		} catch (RuntimeException e) {
-			if (tx != null) {
-				tx.rollback();
+	public void registerMagazine(final Magazine magazine) {
+		new Template().saveOrUpdateQuery(new DatabaseWriter() {
+
+			public Object insertQuery() {
+
+				return magazine;
 			}
-			throw e;
-
-		} finally {
-			session.close();
-		}
-
-	}
-
-	public void unregisterMagazine(String issn, Session session) {
-		Transaction tx = null;
-		String hql = "DELETE FROM Magazine WHERE issn = :magazine_issn";
-		Query query = session.createQuery(hql);
-		query.setParameter("magazine_issn", issn);
-		query.executeUpdate();
-		try {
-			tx = session.beginTransaction();
-
-			tx.commit();
-		} catch (RuntimeException e) {
-			if (tx != null) {
-				tx.rollback();
-			}
-
-		} finally {
-			session.close();
-		}
+		});
 
 	}
 

@@ -2,10 +2,9 @@ package dao;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import template.Helper;
 
 @Entity
-public class Magazine extends Publications implements Helper {
+public class Magazine extends Publications {
 
 	@Column(name = "issn")
 	private String issn;

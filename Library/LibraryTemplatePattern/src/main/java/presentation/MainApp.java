@@ -1,27 +1,15 @@
 package presentation;
 
-import java.util.Date;
-import java.util.List;
-
-import template.Template;
-import dao.Book;
-import dao.Loan;
-import dao.Magazine;
-import dao.Member;
-import dao.Membership;
-import dao.Publications;
+import template.DbOperations;
 
 public class MainApp {
 
 	public static void main(String[] args) {
 
-		Book book = new Book();
-		book.setIsbn("luckyTry");
-		book.setTitle("luckyTry1");
-		new Template().save(book);
-		List listBooks = new Template().listPublications(book);
-		System.out.println(listBooks);
-
+		DbOperations db = new DbOperations();
+		db.unregisterBook("isbn1");
+		db.updateBook("newISBN", "777", "7777777");
+		System.out.println(db.listregisteredBooks());
 	}
 
 }

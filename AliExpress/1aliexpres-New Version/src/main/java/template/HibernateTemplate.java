@@ -10,7 +10,6 @@ public class HibernateTemplate {
 	public void addProduct(ArrayList<Produkt> produkt) {
 		HibernateWarehouse ht = new HibernateWarehouse();
 		ht.addProduct(produkt);
-
 	}
 
 	public ArrayList<Produkt> listProducts() {

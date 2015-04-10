@@ -3,10 +3,8 @@ package dao;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import template.Helper;
-
 @Entity
-public class Book extends Publications implements Helper {
+public class Book extends Publications {
 
 	@Override
 	public String toString() {

@@ -6,7 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import parser.Produkt;
+
+import entities.Produkt;
 import template.JDBCTemplate;
 import template.JdbcDatabaseReader;
 import template.JdbcDatabaseWriter;

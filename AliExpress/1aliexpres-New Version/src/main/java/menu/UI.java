@@ -4,11 +4,12 @@ import isklucok.NemaDovolnoKolicinaIsklucok;
 
 import java.util.ArrayList;
 
+import entities.Produkt;
 import parser.ProductsParser;
-import parser.Produkt;
 import printer.ConsoleInput;
 import printer.Printer;
 import warehouse.dao.Warehouse;
+import accountManagement.AccountManagementImpl;
 import basket.ShopingBasketMethods;
 
 public class UI implements UiInterface {
@@ -19,6 +20,9 @@ public class UI implements UiInterface {
 	ConsoleInput consoleInput = new ConsoleInput();
 	Display display = new Display();
 	ArrayList<Produkt> lista = parser.parseFile();
+	AccountManagementImpl ami;
+	UIAccount accountMenu = new UIAccount(ami);
+	Menu amenu = new Menu(accountMenu.actions(), accountMenu);
 
 	public UI(ShopingBasketMethods basket, Warehouse warehouse) {
 
@@ -31,19 +35,12 @@ public class UI implements UiInterface {
 		actions.add("Listanje na produktite");
 		actions.add("Dodadi produkt vo kosnickata");
 		actions.add("Naplakjanje");
+		actions.add("Account Options");
 		actions.add("Vrati se nazad");
 
 		return actions;
 
 	}
-
-	// public void manuOptions() {
-	// Printer.print("1- Listanje na produktite");
-	// Printer.print("2- Dodadi produkt vo kosnickata");
-	// Printer.print("3- Naplakjanje");
-	// Printer.print("4- Vrati se nazad");
-	// Printer.print("5- Izlezi od aplikacijata");
-	// }
 
 	public void listProducts() {
 
@@ -83,31 +80,32 @@ public class UI implements UiInterface {
 
 	public void processInput(int choise) {
 
-		
-			// this.manuOptions();
-			Printer.print("\n");
-			switch (choise) {
-			case 1:
-				listProducts();
-				break;
-			case 2:
-				try {
-					AddProductIntoBasket();
-				} catch (NemaDovolnoKolicinaIsklucok e) {
-					e.printStackTrace();
-				}
-				break;
-			case 3:
-				payment();
-				break;
-			case 4:
-				display.run();
-				break;
-
-			default:
-				Printer.print("Nevalidna opcija!");
+		Printer.print("\n");
+		switch (choise) {
+		case 1:
+			listProducts();
+			break;
+		case 2:
+			try {
+				AddProductIntoBasket();
+			} catch (NemaDovolnoKolicinaIsklucok e) {
+				e.printStackTrace();
 			}
+			break;
+		case 3:
+			payment();
+			break;
+		case 4:
+			amenu.start();
+
+			break;
+		case 5:
+			display.run();
+			break;
+
+		default:
+			Printer.print("Nevalidna opcija!");
 		}
-	
+	}
 
 }

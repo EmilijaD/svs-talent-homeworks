@@ -2,13 +2,15 @@ package menu;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Component;
+
 import basket.ShopingBasketMethods;
 import basket.ShoppingBasketOptions;
 import printer.ConsoleInput;
 import printer.Printer;
 import warehouse.dao.FactoryWarehouse;
 import warehouse.dao.Warehouse;
-
+@Component
 public class Display {
 
 	ConsoleInput consoleInput = new ConsoleInput();

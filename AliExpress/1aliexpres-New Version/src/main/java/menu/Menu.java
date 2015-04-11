@@ -2,9 +2,11 @@ package menu;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Component;
+
 import printer.ConsoleInput;
 import printer.Printer;
-
+@Component
 public class Menu implements ManuCreator {
 
 	private ArrayList<String> actions = new ArrayList<String>();
@@ -21,6 +23,7 @@ public class Menu implements ManuCreator {
 
 	public void exit() {
 		stop = false;
+		return;
 	}
 
 	public void start() {

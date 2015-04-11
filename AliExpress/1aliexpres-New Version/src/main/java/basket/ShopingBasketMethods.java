@@ -3,7 +3,7 @@ package basket;
 import java.util.ArrayList;
 import java.util.List;
 
-import parser.Produkt;
+import entities.Produkt;
 
 public interface ShopingBasketMethods {
 

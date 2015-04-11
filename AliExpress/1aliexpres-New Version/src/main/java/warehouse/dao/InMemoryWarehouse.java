@@ -3,8 +3,8 @@ package warehouse.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import entities.Produkt;
 import parser.ProductsParser;
-import parser.Produkt;
 
 public class InMemoryWarehouse implements Warehouse {
 

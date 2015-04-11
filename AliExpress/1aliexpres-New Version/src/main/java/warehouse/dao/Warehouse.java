@@ -2,8 +2,10 @@ package warehouse.dao;
 
 import java.util.ArrayList;
 
-import parser.Produkt;
+import org.springframework.stereotype.Service;
 
+import entities.Produkt;
+@Service
 public interface Warehouse {
 
 	public void addProduct(Produkt produkt);

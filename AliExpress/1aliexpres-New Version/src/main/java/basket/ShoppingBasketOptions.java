@@ -3,8 +3,10 @@ package basket;
 import java.util.ArrayList;
 import java.util.List;
 
-import parser.Produkt;
+import org.springframework.stereotype.Service;
 
+import entities.Produkt;
+@Service
 public class ShoppingBasketOptions implements ShopingBasketMethods {
 
 	ArrayList<ShoppingBasket> kosnicka = new ArrayList<ShoppingBasket>();

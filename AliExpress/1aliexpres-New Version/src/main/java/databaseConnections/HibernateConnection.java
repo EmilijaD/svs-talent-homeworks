@@ -6,7 +6,9 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-import parser.Produkt;
+import entities.Account;
+import entities.CreditCard;
+import entities.Produkt;
 
 public class HibernateConnection {
 
@@ -15,14 +17,16 @@ public class HibernateConnection {
 		Configuration configuration = new Configuration();
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 				.applySettings(configuration.getProperties()).build();
-		SessionFactory sessionFactory = configuration.addAnnotatedClass(
-				Produkt.class).buildSessionFactory(serviceRegistry);
+		SessionFactory sessionFactory = configuration
+				.addAnnotatedClass(Produkt.class)
+				.addAnnotatedClass(Account.class)
+				.addAnnotatedClass(CreditCard.class)
+				.buildSessionFactory(serviceRegistry);
 		return sessionFactory.openSession();
 
 	}
-	
-	
-	public static void closeSession(){
+
+	public static void closeSession() {
 		connection().close();
 	}
 

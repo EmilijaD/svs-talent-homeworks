@@ -1,0 +1,26 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Kreairanje na Account</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body style="background-color: pink">
+	<h1>Vnesi keditna karticka:</h1>
+
+	<p>Kreiranje na Account- Part 1:</p>
+	<p>Informacii za kreditna karticka:</p>
+	<form action="#" th:action="@{/creditcard}" th:object="${card}"
+		method="post">
+		<p>Tip na karticka:</p><br/>
+		<input type="text" th:field="*{cardtype}" /> 
+		<p>Broj na karticka:</p><br/>
+		<input type="text" th:field="*{cardNumber}" />
+		<p>CRC code:</p><br/>
+		<input type="text" th:field="*{CRCcode}" /> 
+        <p>Data na istekuvanje</p><br/>
+        <input type="text" th:field="*{expirationDate}" /> <br />
+         <input type="submit" value="Submit" />
+	</form>
+</body>
+</html>

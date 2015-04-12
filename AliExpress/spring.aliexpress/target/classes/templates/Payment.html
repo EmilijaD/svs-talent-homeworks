@@ -1,0 +1,21 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Naplata</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body style="background-color: pink">
+	<h1>Naplakjanje:</h1>
+
+	<p>Vkupno za plakjanje imate:</p>
+	<p th:text="${suma}">suma</p>
+	<p>Za da moze da se izvrsi naplakjanjeto logirajte se:</p>
+	<form action="#" th:action="@{/login}" th:object="${account}"
+		method="post">
+		<input type="text" th:field="*{email}" /> <input type="text"
+			th:field="*{password}" /> <br /> <input type="submit"
+			value="Login" />
+	</form>
+</body>
+</html>

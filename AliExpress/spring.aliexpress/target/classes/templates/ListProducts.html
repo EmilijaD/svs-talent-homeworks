@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>List Products</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body style="background-color: pink">
+	<h1>Products:</h1>
+	<table>
+		<tr th:each="product : ${products}">
+			<td><a th:href="@{/kosnicka/{name}(name=${product.name})}">Stavi
+					vo kosnicka</a></td>
+			<td>|</td>
+			<td th:text="${product.name}">ISBN</td>
+			<td>|</td>
+			<td th:text="${product.price}">Title</td>
+
+		</tr>
+	</table>
+	<a th:href="@{/kosnicka}">Vidi produkti vo kosnicka</a>
+
+</body>
+</html>

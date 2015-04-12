@@ -2,6 +2,7 @@ package menu;
 
 import java.util.ArrayList;
 import java.util.Date;
+
 import appMain.Account;
 import appMain.AccountManagementImpl;
 import appMain.CreditCard;
@@ -23,7 +24,6 @@ public class UIAccount implements UiInterface {
 		ArrayList<String> actions = new ArrayList<String>();
 		actions.add("Create Account");
 		actions.add("Delete Account");
-		actions.add("Update Account");
 		actions.add("Return info about account");
 
 		return actions;
@@ -75,9 +75,10 @@ public class UIAccount implements UiInterface {
 	}
 
 	public void returnInfoAccount() {
-		Printer.print("Vnesete go vasiot email");
+		Printer.print("Vnesete go vasiot email i password");
 		String email = consoleInput.input().next();
-		Account list = ams.returnAccount(email, "");
+		String password = consoleInput.input().next();
+		Account list = ams.returnAccount(email, password);
 		System.out.println(list);
 	}
 
@@ -91,12 +92,9 @@ public class UIAccount implements UiInterface {
 			this.deleteAccount();
 			break;
 		case 3:
-
-			break;
-		case 4:
 			this.returnInfoAccount();
 			break;
-		case 5:
+		case 4:
 			display.run();
 			break;
 

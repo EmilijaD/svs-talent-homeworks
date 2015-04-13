@@ -12,9 +12,7 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet("/calculate")
 public class Calculator extends HttpServlet {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	ArrayList<String> sessionList = new ArrayList<String>();
 

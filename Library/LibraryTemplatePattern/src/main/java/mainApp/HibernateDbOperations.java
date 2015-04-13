@@ -1,18 +1,22 @@
-package factory;
+package mainApp;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
 
 import template.DaoIterface;
 import template.DatabaseReader;
 import template.DatabaseWriter;
+
 import template.HibernateTemplate;
 import dao.Book;
 import dao.Magazine;
-import dao.Publications;
 
+@Repository
 public class HibernateDbOperations implements DaoIterface {
 
 	public void registerBook(final Book book) {
@@ -41,16 +45,47 @@ public class HibernateDbOperations implements DaoIterface {
 
 	}
 
+	public void unregisterBookById(final Long id) {
+
+		new HibernateTemplate().returnQuery(new DatabaseReader() {
+
+			public <E> E returnQuery(Session session) {
+				String hql = "DELETE FROM Book WHERE id = :id";
+				final Query query = session.createQuery(hql);
+				query.setParameter("id", id);
+				query.executeUpdate();
+				return null;
+			}
+		});
+
+	}
+
 	public List<Book> listregisteredBooks() {
 		return new HibernateTemplate().returnQuery(new DatabaseReader() {
 
 			@SuppressWarnings("unchecked")
-			public List<Publications> returnQuery(Session session) {
-				List<Publications> results = session.createQuery("FROM Book")
-						.list();
+			public List<Book> returnQuery(Session session) {
+				List<Book> results = session.createQuery("FROM Book").list();
 				return results;
 			}
 
+		});
+	}
+
+	public Book findBook(final Long id) {
+		return new HibernateTemplate().returnQuery(new DatabaseReader() {
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public Book returnQuery(Session session) {
+				Criteria cr = session.createCriteria(Book.class);
+				cr.add(Restrictions.eq("id", id));
+				@SuppressWarnings("rawtypes")
+				List results = cr.list();
+				Book b = (Book) results.get(0);
+
+				return b;
+			}
 		});
 	}
 

@@ -1,5 +1,6 @@
 package factory;
 
+import mainApp.HibernateDbOperations;
 import printer.Printer;
 import template.DaoIterface;
 

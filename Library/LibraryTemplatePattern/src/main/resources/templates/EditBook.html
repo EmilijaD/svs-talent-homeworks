@@ -1,0 +1,8 @@
+
+<html>
+<form action="#" th:action="@{/books}" th:object="${book}" method="post">
+	<input type="text" th:field="*{isbn}" th:value="${isbn}" />
+	<input type="text" th:field="*{title}" th:value="${title}" />
+	<br /> <input type="submit" value="Register or Update Book" />
+</form>
+</html>
